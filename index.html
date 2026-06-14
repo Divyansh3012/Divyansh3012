@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio — Divyansh Trivedi</title>
+  <title>Portfolio — Your Name</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -23,7 +23,44 @@
       --syne: 'Syne', sans-serif;
       --body: 'Instrument Sans', sans-serif;
       --mono: 'JetBrains Mono', monospace;
+      --graffiti-opacity: 0.13;
+      --graffiti-stroke: rgba(200,240,79,0.35);
     }
+
+    [data-theme="light"] {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface2: #e8edf7;
+      --border: rgba(37,99,235,0.10);
+      --border-hover: rgba(37,99,235,0.28);
+      --ink: #0f172a;
+      --muted: #64748b;
+      --accent: #1d4ed8;
+      --accent2: #2563eb;
+      --accent-dim: rgba(37,99,235,0.08);
+      --graffiti-opacity: 0.10;
+      --graffiti-stroke: rgba(37,99,235,0.30);
+    }
+
+    [data-theme="light"] .hero-name .outline {
+      -webkit-text-stroke: 1.5px rgba(15,23,42,0.25);
+      color: transparent;
+    }
+    [data-theme="light"] .hero-name .dim { color: rgba(15,23,42,0.25); }
+    [data-theme="light"] .hero-bio { color: rgba(15,23,42,0.65); }
+    [data-theme="light"] .proj-desc { color: rgba(15,23,42,0.55); }
+    [data-theme="light"] .exp-desc { color: rgba(15,23,42,0.65); }
+    [data-theme="light"] .edu-detail { color: rgba(15,23,42,0.55); }
+    [data-theme="light"] .pill { background: rgba(37,99,235,0.06); color: #1e40af; border-color: rgba(37,99,235,0.18); }
+    [data-theme="light"] .pill:hover { background: rgba(37,99,235,0.14); color: #1d4ed8; border-color: rgba(37,99,235,0.4); }
+    [data-theme="light"] .tag { background: rgba(37,99,235,0.08); color: #1d4ed8; border-color: rgba(37,99,235,0.22); }
+    [data-theme="light"] .glow-cursor { background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%); }
+    [data-theme="light"] nav { background: rgba(244,246,251,0.88); }
+    [data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+    [data-theme="light"] .cta-primary { background: var(--accent); color: #fff; }
+    [data-theme="light"] .cta-primary:hover { background: #1e40af; }
+    [data-theme="light"] .cta-ghost { color: var(--ink); }
+    [data-theme="light"] .stat-num { color: var(--accent); }
 
     html { scroll-behavior: smooth; }
 
@@ -439,6 +476,27 @@
       transition: left 0.1s, top 0.1s;
     }
 
+    /* ─── THEME TOGGLE ─── */
+    .theme-toggle {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border-hover);
+      color: var(--ink); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; transition: all 0.25s; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+
+    /* ─── GRAFFITI LAYER ─── */
+    .graffiti-layer {
+      position: absolute; inset: 0; pointer-events: none;
+      overflow: hidden; z-index: 0; opacity: var(--graffiti-opacity);
+    }
+    .graffiti-layer svg { position: absolute; }
+    #hero, #skills, #experience, #projects, #education, #contact { position: relative; }
+    #hero > *:not(.graffiti-layer) { position: relative; z-index: 1; }
+    .section > *:not(.graffiti-layer) { position: relative; z-index: 1; }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
@@ -459,9 +517,12 @@
 
   <div class="glow-cursor" id="glow"></div>
 
+  <!-- ── THEME TOGGLE ── -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">🌙</button>
+
   <!-- ── NAV ── -->
   <nav>
-    <a class="nav-logo" href="#hero">DT<span>.</span></a> <!-- REPLACE: Your initials -->
+    <a class="nav-logo" href="#hero">YN<span>.</span></a> <!-- REPLACE: Your initials -->
     <ul class="nav-links">
       <li><a href="#skills">Stack</a></li>
       <li><a href="#experience">Work</a></li>
@@ -472,27 +533,66 @@
 
   <!-- ── HERO ── -->
   <section id="hero">
+    <!-- GRAFFITI: Football, F1 car, chess knight, code brackets -->
+    <div class="graffiti-layer">
+      <!-- Football (soccer ball) top-right -->
+      <svg width="140" height="140" style="right:6%;top:12%" viewBox="0 0 140 140">
+        <circle cx="70" cy="70" r="60" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2.5"/>
+        <polygon points="70,20 85,40 70,55 55,40" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2" stroke-linejoin="round"/>
+        <polygon points="70,120 85,100 70,85 55,100" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2" stroke-linejoin="round"/>
+        <polygon points="20,70 40,55 55,70 40,85" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2" stroke-linejoin="round"/>
+        <polygon points="120,70 100,55 85,70 100,85" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="70" y1="55" x2="85" y2="40" stroke="var(--graffiti-stroke)" stroke-width="1.5"/>
+        <line x1="70" y1="55" x2="55" y2="40" stroke="var(--graffiti-stroke)" stroke-width="1.5"/>
+        <line x1="70" y1="55" x2="85" y2="70" stroke="var(--graffiti-stroke)" stroke-width="1.5"/>
+        <line x1="70" y1="55" x2="55" y2="70" stroke="var(--graffiti-stroke)" stroke-width="1.5"/>
+        <line x1="70" y1="85" x2="85" y2="70" stroke="var(--graffiti-stroke)" stroke-width="1.5"/>
+        <line x1="70" y1="85" x2="55" y2="70" stroke="var(--graffiti-stroke)" stroke-width="1.5"/>
+      </svg>
+      <!-- F1 car outline bottom-right -->
+      <svg width="200" height="90" style="right:2%;bottom:15%" viewBox="0 0 200 90">
+        <path d="M30,55 L15,52 L12,45 L20,38 L35,36 L60,30 L90,25 L130,24 L160,28 L178,36 L185,44 L183,52 L170,56 L155,58 L55,58 Z" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2.2" stroke-linejoin="round"/>
+        <!-- wheels -->
+        <circle cx="50" cy="60" r="12" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2.2"/>
+        <circle cx="158" cy="60" r="12" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2.2"/>
+        <!-- cockpit -->
+        <path d="M88,25 L92,14 L112,13 L118,25" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2"/>
+        <!-- front wing -->
+        <path d="M10,52 L2,54 L4,60 L18,58" fill="none" stroke="var(--graffiti-stroke)" stroke-width="1.8"/>
+        <!-- rear wing -->
+        <path d="M176,36 L194,30 L196,36 L180,42" fill="none" stroke="var(--graffiti-stroke)" stroke-width="1.8"/>
+      </svg>
+      <!-- Chess knight top-left area -->
+      <svg width="80" height="100" style="left:4%;top:28%" viewBox="0 0 80 100">
+        <path d="M20,90 L20,70 C20,70 10,60 12,45 C14,30 22,22 28,18 C30,16 28,10 32,8 C36,6 40,10 42,8 C44,6 46,10 48,12 C50,14 55,18 56,26 C57,34 52,40 50,44 C48,48 48,55 50,60 L60,90 Z" fill="none" stroke="var(--graffiti-stroke)" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="34" cy="22" r="4" fill="none" stroke="var(--graffiti-stroke)" stroke-width="1.8"/>
+        <line x1="20" y1="82" x2="60" y2="82" stroke="var(--graffiti-stroke)" stroke-width="2"/>
+        <path d="M28,45 L22,50 L26,52 L24,58" fill="none" stroke="var(--graffiti-stroke)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <!-- Code brackets + terminal left-bottom -->
+      <svg width="160" height="80" style="left:2%;bottom:18%" viewBox="0 0 160 80">
+        <text x="0" y="55" font-family="monospace" font-size="52" fill="var(--graffiti-stroke)" font-weight="200">&lt;/&gt;</text>
+      </svg>
+    </div>
     <div class="hero-grid-line"></div>
     <div class="hero-grid-line"></div>
 
-    <p class="hero-eyebrow">Available for hire &nbsp;·&nbsp; Based in Bangalore, India</p> <!-- REPLACE -->
+    <p class="hero-eyebrow">Available for hire &nbsp;·&nbsp; Based in Surat, India</p> <!-- REPLACE -->
 
     <h1 class="hero-name">
       Divyansh<br/>
       <span class="outline">Trivedi</span>
-      <!-- &nbsp;<span class="dim">Name</span> -->
-      <!-- REPLACE: e.g. Aryan<br/><span class="outline">Mehta</span> -->
     </h1>
 
     <div class="hero-bottom">
       <p class="hero-bio">
         Software engineer who turns complex <strong>distributed systems</strong>
         into elegant, scalable solutions. Currently building [X] at
-        <strong>Keysoft Creations</strong>
+        <strong>[Company]</strong> — shipping features that reach millions.
         <!-- REPLACE with your actual bio -->
       </p>
       <div class="hero-ctas">
-        <a class="cta cta-primary" href="https://drive.google.com/file/d/11CoISiobgbukmM-5V3COy8KCl38e72Cf/view?usp=sharing" target="_blank">↓ Resume</a>
+        <a class="cta cta-primary" href="YOUR_RESUME_LINK" target="_blank">↓ Resume</a>
         <a class="cta cta-ghost" href="https://github.com/USERNAME" target="_blank">GitHub ↗</a>
         <a class="cta cta-ghost" href="https://linkedin.com/in/PROFILE" target="_blank">LinkedIn ↗</a>
       </div>
@@ -502,290 +602,4 @@
   </section>
 
   <!-- ── SKILLS ── -->
-  <section class="section reveal" id="skills">
-    <div class="section-header">
-      <span class="section-num">01</span>
-      <h2 class="section-title">Tech Stack</h2>
-      <div class="section-line"></div>
-    </div>
-
-    <!-- OPTIONAL: Stats row — replace numbers with your own -->
-    <div class="stats-row">
-      <div class="stat">
-        <p class="stat-num">10</p>
-        <p class="stat-label">Months Experience</p>
-      </div>
-      
-      <div class="stat">
-        <p class="stat-num">60+</p>
-        <p class="stat-label">LeetCode Solved</p>
-      </div>
-    </div>
-
-    <div class="skills-container">
-      <div class="skill-block">
-        <p class="skill-category">Languages</p>
-        <div class="skill-pills">
-          <!-- REPLACE with your languages -->
-          <span class="pill">Java</span>
-          <span class="pill">C#</span>
-          <span class="pill">MS SQL</span>
-          <span class="pill">TypeScript</span>
-          <span class="pill">Postgress SQL</span>
-          <!-- <span class="pill">C++</span> -->
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-category">Frameworks &amp; Libraries</p>
-        <div class="skill-pills">
-          <!-- REPLACE -->
-          <span class="pill">Spring Boot</span>
-          <span class="pill">Angular</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-category">Infrastructure &amp; Cloud</p>
-        <div class="skill-pills">
-          <!-- REPLACE -->
-          <span class="pill">AWS</span>
-          <span class="pill">Kubernetes</span>
-          <span class="pill">Docker</span>
-          <span class="pill">Terraform</span>
-          <span class="pill">CI/CD</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <p class="skill-category">Databases &amp; Messaging</p>
-        <div class="skill-pills">
-          <!-- REPLACE -->
-          <span class="pill">PostgreSQL</span>
-          <span class="pill">Redis</span>
-          <span class="pill">MongoDB</span>
-          <span class="pill">Kafka</span>
-          <span class="pill">Elasticsearch</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── EXPERIENCE ── -->
-  <section class="section reveal" id="experience">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <h2 class="section-title">Experience</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="exp-list">
-
-      <!-- Repeat exp-card for each role -->
-
-      <div class="exp-card">
-        <div class="exp-left">
-          <p class="exp-period">2025 - Present</p>
-          <p class="exp-location">Full-time</p>
-        </div>
-        <div>
-          <p class="exp-company">Keysoft Creations</p> <!-- REPLACE -->
-          <p class="exp-role">SDE I</p>
-          <div class="exp-desc">
-            <ul>
-              <li>Developed [feature] end-to-end and shipped to production.</li>
-              <li>Optimised critical DB queries — query time 8s → 0.4s.</li>
-            </ul>
-          </div>
-          <div class="exp-tags">
-            <span class="tag">Python</span>
-            <span class="tag">Django</span>
-            <span class="tag">PostgreSQL</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-card">
-        <div class="exp-left">
-          <p class="exp-period">Summer 2020</p>
-          <p class="exp-location">Internship</p>
-        </div>
-        <div>
-          <p class="exp-company">Intern Company</p> <!-- REPLACE -->
-          <p class="exp-role">SDE Intern</p>
-          <div class="exp-desc">
-            <ul>
-              <li>Built [project] using [stack] — deployed to production.</li>
-            </ul>
-          </div>
-          <div class="exp-tags">
-            <span class="tag">React</span>
-            <span class="tag">Node.js</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── PROJECTS ── -->
-  <section class="section reveal" id="projects">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <h2 class="section-title">Projects</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="projects-grid">
-
-      <!-- Repeat proj-card for each project -->
-      <a class="proj-card" href="https://github.com/USERNAME/project-1" target="_blank">
-        <div class="proj-header">
-          <div class="proj-icon">⚡</div> <!-- REPLACE emoji or remove -->
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-name">Project One</p> <!-- REPLACE -->
-        <p class="proj-desc">
-          What it does and why it matters — describe it in 1-2 punchy lines.
-          Mention scale or impact if you have it.
-          <!-- REPLACE -->
-        </p>
-        <div class="proj-stack">
-          <span class="tag">Go</span>
-          <span class="tag">gRPC</span>
-          <span class="tag">PostgreSQL</span>
-        </div>
-      </a>
-
-      <a class="proj-card" href="https://github.com/USERNAME/project-2" target="_blank">
-        <div class="proj-header">
-          <div class="proj-icon">🔍</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-name">Project Two</p>
-        <p class="proj-desc">
-          What it does and why it matters — 1-2 punchy lines. Mention scale or impact.
-        </p>
-        <div class="proj-stack">
-          <span class="tag">Python</span>
-          <span class="tag">FastAPI</span>
-          <span class="tag">Redis</span>
-        </div>
-      </a>
-
-      <a class="proj-card" href="https://github.com/USERNAME/project-3" target="_blank">
-        <div class="proj-header">
-          <div class="proj-icon">🏗️</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-name">Project Three</p>
-        <p class="proj-desc">
-          What it does and why it matters — 1-2 punchy lines. Mention scale or impact.
-        </p>
-        <div class="proj-stack">
-          <span class="tag">React</span>
-          <span class="tag">TypeScript</span>
-          <span class="tag">Node.js</span>
-        </div>
-      </a>
-
-      <a class="proj-card" href="https://github.com/USERNAME/project-4" target="_blank">
-        <div class="proj-header">
-          <div class="proj-icon">📊</div>
-          <span class="proj-arrow">↗</span>
-        </div>
-        <p class="proj-name">Project Four</p>
-        <p class="proj-desc">
-          What it does and why it matters — 1-2 punchy lines. Mention scale or impact.
-        </p>
-        <div class="proj-stack">
-          <span class="tag">Java</span>
-          <span class="tag">Kafka</span>
-          <span class="tag">Spark</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- ── EDUCATION ── -->
-  <section class="section reveal" id="education">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <h2 class="section-title">Education</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="edu-list">
-
-      <div class="edu-card">
-        <p class="edu-year">2017 — 2021</p> <!-- REPLACE -->
-        <div>
-          <p class="edu-degree">B.Tech in Computer Science</p> <!-- REPLACE -->
-          <p class="edu-school">University / College Name · City</p> <!-- REPLACE -->
-          <p class="edu-detail">GPA: X.XX · Dean's List · Relevant coursework: DSA, OS, DBMS, Networks</p>
-          <!-- REPLACE or remove edu-detail -->
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── CONTACT ── -->
-  <section class="section reveal" id="contact">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <h2 class="section-title">Get in Touch</h2>
-      <div class="section-line"></div>
-    </div>
-    <h3 class="contact-headline">
-      Let's build<br/>something <span class="accent">great.</span>
-      <!-- REPLACE tagline if you want -->
-    </h3>
-    <p class="contact-sub">Open to full-time SDE roles · responds within 24h</p> <!-- REPLACE -->
-    <div class="contact-grid">
-      <a class="contact-link" href="mailto:you@email.com">
-        <span class="contact-link-label">Email</span>
-        <span class="contact-link-value">you@email.com</span> <!-- REPLACE -->
-        <span class="contact-link-arrow">↗</span>
-      </a>
-      <a class="contact-link" href="https://github.com/USERNAME" target="_blank">
-        <span class="contact-link-label">GitHub</span>
-        <span class="contact-link-value">github.com/username</span> <!-- REPLACE -->
-        <span class="contact-link-arrow">↗</span>
-      </a>
-      <a class="contact-link" href="https://linkedin.com/in/PROFILE" target="_blank">
-        <span class="contact-link-label">LinkedIn</span>
-        <span class="contact-link-value">linkedin.com/in/profile</span> <!-- REPLACE -->
-        <span class="contact-link-arrow">↗</span>
-      </a>
-      <a class="contact-link" href="https://leetcode.com/USERNAME" target="_blank">
-        <span class="contact-link-label">LeetCode</span>
-        <span class="contact-link-value">leetcode.com/username</span> <!-- REPLACE -->
-        <span class="contact-link-arrow">↗</span>
-      </a>
-      <a class="contact-link" href="https://twitter.com/USERNAME" target="_blank">
-        <span class="contact-link-label">X / Twitter</span>
-        <span class="contact-link-value">@username</span> <!-- REPLACE or remove -->
-        <span class="contact-link-arrow">↗</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ── -->
-  <footer>
-    <p class="footer-text">© 2025 Your Name <span class="footer-dot">·</span> Built with HTML</p>
-    <p class="footer-text">Hosted on GitHub Pages</p>
-  </footer>
-
-  <script>
-    // Cursor glow
-    const glow = document.getElementById('glow');
-    document.addEventListener('mousemove', e => {
-      glow.style.left = e.clientX + 'px';
-      glow.style.top  = e.clientY + 'px';
-    });
-
-    // Scroll reveal
-    const obs = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.08 }
-    );
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  </script>
-</body>
-</html>
+  <section class="section reveal" id="s
